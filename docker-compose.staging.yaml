@@ -1,0 +1,38 @@
+# MORE Platform
+# Overrides for staging
+
+name: more-staging
+services:
+  watchtower:
+    image: containrrr/watchtower
+    restart: always
+    environment:
+      WATCHTOWER_LABEL_ENABLE: "true"
+      WATCHTOWER_CLEANUP: "true"
+      WATCHTOWER_POLL_INTERVAL: "30"
+      WATCHTOWER_NO_STARTUP_MESSAGE: "true"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: bind
+        source: /root/.docker/config.json
+        target: /config.json
+        read_only: true
+  ingress:
+    environment:
+      # let's-encrypt config
+      TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_EMAIL: "${LE_MAIL-infra@redlink.io}"
+      TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_HTTPCHALLENGE_ENTRYPOINT: "web"
+      TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_STORAGE: "/etc/traefik/acme/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - type: volume
+        source: letsencrypt
+        target: /etc/traefik/acme
+
+
+volumes:
+  letsencrypt:

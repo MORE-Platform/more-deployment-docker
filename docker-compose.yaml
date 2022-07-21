@@ -1,0 +1,102 @@
+# MORE Platform
+# Base-Config
+name: more
+services:
+  # Proxy / Ingress
+  ingress:
+    image: traefik:v2.8
+    restart: always
+    environment:
+      # docker-config
+      TRAEFIK_PROVIDERS_DOCKER: "true"
+      TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: "false"
+      # http
+      TRAEFIK_ENTRYPOINTS_WEB_ADDRESS: ":80"
+      # https
+      TRAEFIK_ENTRYPOINTS_SSL_ADDRESS: ":443"
+      TRAEFIK_ENTRYPOINTS_SSL_HTTP_TLS: "true"
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.redirect-to-ssl.priority=1"
+      - "traefik.http.routers.redirect-to-ssl.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.redirect-to-ssl.service=noop@internal"
+      - "traefik.http.routers.redirect-to-ssl.entrypoints=web"
+      - "traefik.http.routers.redirect-to-ssl.middlewares=redirect-to-ssl"
+      - "traefik.http.middlewares.redirect-to-ssl.redirectscheme.scheme=https"
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+        read_only: true
+
+  # Postgres Database
+  postgres:
+    image: postgres:14-alpine
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 10s
+      timeout: 1s
+      retries: 5
+    environment:
+      POSTGRES_PASSWORD: secretPassword123
+      POSTGRES_USER: more
+      POSTGRES_DB: more
+    volumes:
+      - type: volume
+        source: postgres-data
+        target: /var/lib/postgresql/data
+
+  # Elastic Search
+  elastic:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.3.2
+    healthcheck:
+      test: ["CMD-SHELL", "curl --silent --fail -m 5 localhost:9200/_cluster/health || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    deploy:
+      resources:
+        limits:
+          memory: 640M
+        reservations:
+          memory: 512M
+    environment:
+      discovery.type: "single-node"
+      cluster.name: "more-cluster"
+      bootstrap.memory_lock: true
+      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
+      xpack.security.enabled: "false"
+
+  mmb-backend:
+    image: nginx:alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
+      timeout: 2s
+      interval: 15s
+      retries: 3
+
+  mmb-frontend:
+    image: nginx:alpine
+    depends_on:
+      mmb-backend:
+        condition: service_healthy
+
+  dsm-gateway:
+    image: nginx:alpine
+    depends_on:
+      postgres:
+        condition: service_healthy
+      elastic:
+        condition: service_healthy
+
+    volumes:
+      - type: volume
+        source: elastic-data
+        target: /usr/share/elasticsearch/data
+
+volumes:
+  postgres-data:
+  elastic-data:
