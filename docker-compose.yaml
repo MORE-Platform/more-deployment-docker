@@ -1,12 +1,18 @@
 # MORE Platform
 # Base-Config
-name: more
+name: more-platform
 services:
   # Proxy / Ingress
   ingress:
     image: traefik:v2.8
     restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:${TRAEFIK_ENTRYPOINTS_TRAEFIK_ADDRESS:-8080}/ping || exit 1"]
+      timeout: 2s
+      interval: 15s
+      retries: 3
     environment:
+      TRAEFIK_PING: "true"
       # docker-config
       TRAEFIK_PROVIDERS_DOCKER: "true"
       TRAEFIK_PROVIDERS_DOCKER_EXPOSEDBYDEFAULT: "false"
@@ -16,13 +22,13 @@ services:
       TRAEFIK_ENTRYPOINTS_SSL_ADDRESS: ":443"
       TRAEFIK_ENTRYPOINTS_SSL_HTTP_TLS: "true"
     labels:
-      - "traefik.enable=true"
-      - "traefik.http.routers.redirect-to-ssl.priority=1"
-      - "traefik.http.routers.redirect-to-ssl.rule=PathPrefix(`/`)"
-      - "traefik.http.routers.redirect-to-ssl.service=noop@internal"
-      - "traefik.http.routers.redirect-to-ssl.entrypoints=web"
-      - "traefik.http.routers.redirect-to-ssl.middlewares=redirect-to-ssl"
-      - "traefik.http.middlewares.redirect-to-ssl.redirectscheme.scheme=https"
+      'traefik.enable': "true"
+      'traefik.http.routers.redirect-to-ssl.priority': "1"
+      'traefik.http.routers.redirect-to-ssl.rule': "PathPrefix(`/`)"
+      'traefik.http.routers.redirect-to-ssl.service': "noop@internal"
+      'traefik.http.routers.redirect-to-ssl.entrypoints': "web"
+      'traefik.http.routers.redirect-to-ssl.middlewares': "redirect-to-ssl"
+      'traefik.http.middlewares.redirect-to-ssl.redirectscheme.scheme': "https"
     volumes:
       - type: bind
         source: /var/run/docker.sock
@@ -32,6 +38,7 @@ services:
   # Postgres Database
   postgres:
     image: postgres:14-alpine
+    restart: always
     healthcheck:
       test: ["CMD-SHELL", "pg_isready"]
       interval: 10s
@@ -49,8 +56,9 @@ services:
   # Elastic Search
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.3.2
+    restart: always
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail -m 5 localhost:9200/_cluster/health || exit 1"]
+      test: ["CMD-SHELL", "curl --silent --fail -m 5 http://localhost:9200/_cluster/health || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 3
@@ -67,11 +75,16 @@ services:
       ES_JAVA_OPTS: "-Xms256m -Xmx512m"
       xpack.security.enabled: "false"
 
+  # Management & Monitoring
   mmb-backend:
     image: nginx:alpine
+    restart: always
     depends_on:
       postgres:
         condition: service_healthy
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.mmb-backend.entrypoint': "ssl"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
       timeout: 2s
@@ -80,17 +93,38 @@ services:
 
   mmb-frontend:
     image: nginx:alpine
+    restart: always
     depends_on:
       mmb-backend:
         condition: service_healthy
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.mmb-frontend.entrypoint': "ssl"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
+      timeout: 2s
+      interval: 15s
+      retries: 3
 
+  # Data Storage Gateway
   dsm-gateway:
     image: nginx:alpine
+    restart: always
     depends_on:
       postgres:
         condition: service_healthy
       elastic:
         condition: service_healthy
+    deploy:
+      replicas: 2
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.dsm-gateway.entrypoint': "ssl"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
+      timeout: 2s
+      interval: 15s
+      retries: 3
 
     volumes:
       - type: volume

@@ -1,7 +1,7 @@
 # MORE Platform
 # Overrides for staging
 
-name: more-staging
+name: more-platform${ENV_SUFFIX--test}
 services:
   watchtower:
     image: containrrr/watchtower
@@ -24,7 +24,7 @@ services:
       # let's-encrypt config
       TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_EMAIL: "${LE_MAIL-infra@redlink.io}"
       TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_HTTPCHALLENGE_ENTRYPOINT: "web"
-      TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_STORAGE: "/etc/traefik/acme/acme.json"
+      TRAEFIK_CERTIFICATESRESOLVERS_LE_ACME_STORAGE: "/etc/traefik/acme/acme${ENV_SUFFIX--test}.json"
     ports:
       - "80:80"
       - "443:443"
@@ -33,6 +33,15 @@ services:
         source: letsencrypt
         target: /etc/traefik/acme
 
+  mmb-backend:
+    labels:
+      'traefik.http.routers.mmb-backend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`) && PathPrefix(`/api`)"
+  mmb-frontend:
+    labels:
+      'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
+  dsm-gateway:
+    labels:
+      'traefik.http.routers.dsm-gateway.rule': "Host(`dsm.platform${ENV_SUFFIX--test}.more.redlink.io`)"
 
 volumes:
   letsencrypt:
