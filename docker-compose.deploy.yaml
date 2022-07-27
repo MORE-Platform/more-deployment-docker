@@ -36,12 +36,15 @@ services:
   mmb-backend:
     labels:
       'traefik.http.routers.mmb-backend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`) && PathPrefix(`/api`)"
+      'traefik.http.routers.mmb-backend.tls.certResolver': 'le'
   mmb-frontend:
     labels:
       'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
+      'traefik.http.routers.mmb-frontend.tls.certResolver': 'le'
   dsm-gateway:
     labels:
       'traefik.http.routers.dsm-gateway.rule': "Host(`dsm.platform${ENV_SUFFIX--test}.more.redlink.io`)"
+      'traefik.http.routers.dsm-gateway.tls.certResolver': 'le'
 
 volumes:
   letsencrypt:
