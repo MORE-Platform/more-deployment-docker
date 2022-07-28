@@ -41,10 +41,10 @@ services:
     labels:
       'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.mmb-frontend.tls.certResolver': 'le'
-  dsm-gateway:
+  dsb-gateway:
     labels:
-      'traefik.http.routers.dsm-gateway.rule': "Host(`dsm.platform${ENV_SUFFIX--test}.more.redlink.io`)"
-      'traefik.http.routers.dsm-gateway.tls.certResolver': 'le'
+      'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
+      'traefik.http.routers.dsb-gateway.tls.certResolver': 'le'
 
 volumes:
   letsencrypt:

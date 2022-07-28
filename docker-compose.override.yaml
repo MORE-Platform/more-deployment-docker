@@ -15,6 +15,6 @@ services:
   mmb-frontend:
     labels:
       'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.more.local.redlink.io`)"
-  dsm-gateway:
+  dsb-gateway:
     labels:
-      'traefik.http.routers.dsm-gateway.rule': "Host(`dsm.more.local.redlink.io`)"
+      'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.more.local.redlink.io`)"

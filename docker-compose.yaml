@@ -113,7 +113,7 @@ services:
       MORE_API_ENDPOINT: "http://mmb-backend:8080/api/"
 
   # Data Storage Gateway
-  dsm-gateway:
+  dsb-gateway:
     image: nginx:alpine
     restart: always
     depends_on:
@@ -125,7 +125,7 @@ services:
       replicas: 2
     labels:
       'traefik.enable': "true"
-      'traefik.http.routers.dsm-gateway.entrypoints': "ssl"
+      'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
       timeout: 2s
