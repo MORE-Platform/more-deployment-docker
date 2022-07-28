@@ -30,5 +30,7 @@ fi
 
 export ENV ENV_SUFFIX
 git fetch --prune
-git checkout "${MAIN_BRANCH:-main}"
-docker compose "${COMPOSE_ARGS[@]}" up -d
+git checkout --force "${MAIN_BRANCH:-main}"
+git pull
+docker compose "${COMPOSE_ARGS[@]}" up -d --remove-orphans --quiet-pull
+docker image prune -f
