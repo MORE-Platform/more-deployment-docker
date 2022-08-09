@@ -35,14 +35,17 @@ services:
 
   mmb-backend:
     labels:
+      'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.mmb-backend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`) && PathPrefix(`/api`)"
       'traefik.http.routers.mmb-backend.tls.certResolver': 'le'
   mmb-frontend:
     labels:
+      'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.mmb-frontend.tls.certResolver': 'le'
   dsb-gateway:
     labels:
+      'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.dsb-gateway.tls.certResolver': 'le'
 
