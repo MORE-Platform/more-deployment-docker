@@ -74,6 +74,10 @@ services:
       bootstrap.memory_lock: true
       ES_JAVA_OPTS: "-Xms256m -Xmx512m"
       xpack.security.enabled: "false"
+    volumes:
+      - type: volume
+        source: elastic-data
+        target: /usr/share/elasticsearch/data
 
   # Management & Monitoring
   mmb-backend:
@@ -86,7 +90,7 @@ services:
       'traefik.enable': "true"
       'traefik.http.routers.mmb-backend.entrypoints': "ssl"
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail -m 5 localhost:8080/actuator/health || exit 1"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/actuator/health || exit 1"]
       timeout: 2s
       interval: 15s
       retries: 3
@@ -105,7 +109,7 @@ services:
       'traefik.enable': "true"
       'traefik.http.routers.mmb-frontend.entrypoints': "ssl"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       timeout: 2s
       interval: 15s
       retries: 3
@@ -127,15 +131,10 @@ services:
       'traefik.enable': "true"
       'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q --spider localhost/ || exit 1"]
+      test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       timeout: 2s
       interval: 15s
       retries: 3
-
-    volumes:
-      - type: volume
-        source: elastic-data
-        target: /usr/share/elasticsearch/data
 
 volumes:
   postgres-data:
