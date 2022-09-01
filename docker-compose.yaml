@@ -98,6 +98,7 @@ services:
       POSTGRES_DBNAME: more
       POSTGRES_USER: more
       POSTGRES_PASSWORD: secretPassword123
+      ELASTIC_HOST: elastic
 
   mmb-frontend:
     image: ghcr.io/more-platform/mmb-frontend:latest
