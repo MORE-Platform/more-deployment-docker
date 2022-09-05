@@ -89,8 +89,6 @@ services:
     labels:
       'traefik.enable': "true"
       'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
-    ports:
-      - 5601:80
 
   # Management & Monitoring
   mmb-backend:
