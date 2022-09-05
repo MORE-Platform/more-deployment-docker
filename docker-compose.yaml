@@ -79,6 +79,17 @@ services:
         source: elastic-data
         target: /usr/share/elasticsearch/data
 
+  # Kibana
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.3.2
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elastic:9200
+    depends_on:
+      - elastic
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
+
   # Management & Monitoring
   mmb-backend:
     image: ghcr.io/more-platform/mmb-backend:latest
