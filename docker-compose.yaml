@@ -89,7 +89,7 @@ services:
         condition: service_healthy
     labels:
       'traefik.enable': "true"
-      'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
+      'traefik.http.routers.kibana.entrypoints': "ssl"
 
   # Management & Monitoring
   mmb-backend:
@@ -139,7 +139,7 @@ services:
       elastic:
         condition: service_healthy
     deploy:
-      replicas: 1
+      replicas: 2
     labels:
       'traefik.enable': "true"
       'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
