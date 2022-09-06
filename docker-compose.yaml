@@ -83,9 +83,10 @@ services:
   kibana:
     image: docker.elastic.co/kibana/kibana:8.3.2
     environment:
-      - ELASTICSEARCH_HOSTS=http://elastic:9200
+      ELASTICSEARCH_HOSTS: http://elastic:9200
     depends_on:
-      - elastic
+      elastic:
+        condition: service_healthy
     labels:
       'traefik.enable': "true"
       'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
