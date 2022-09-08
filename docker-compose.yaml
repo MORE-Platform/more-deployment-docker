@@ -68,11 +68,14 @@ services:
           memory: 640M
         reservations:
           memory: 512M
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
     environment:
       discovery.type: "single-node"
       cluster.name: "more-cluster"
       bootstrap.memory_lock: true
-      ES_JAVA_OPTS: "-Xms256m -Xmx512m"
       xpack.security.enabled: "false"
     volumes:
       - type: volume
