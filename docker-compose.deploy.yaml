@@ -33,6 +33,14 @@ services:
         source: letsencrypt
         target: /etc/traefik/acme
 
+  elastic:
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+        reservations:
+          memory: 1G
+
   mmb-backend:
     labels:
       'com.centurylinklabs.watchtower.enable': "true"
