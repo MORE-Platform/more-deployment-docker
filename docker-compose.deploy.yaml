@@ -47,12 +47,15 @@ services:
       'traefik.http.routers.mmb-backend.rule': "Host(`mmb.platform${ENV_SUFFIX--test}.more.redlink.io`) && PathPrefix(`/api`)"
       'traefik.http.routers.mmb-backend.tls.certResolver': 'le'
     environment:
+      MMB_BASE_URL: 'mmb.platform${ENV_SUFFIX--test}.more.redlink.io/api/v1'
+      DSG_BASE_URL: 'dsb.platform${ENV_SUFFIX--test}.more.redlink.io/api/v1'
       FIREBASE_SETTINGS: 'file:/data/secrets/firebase-settings.json'
     volumes:
       - type: bind
         source: ./secrets
         target: /data/secrets
         read_only: true
+
   mmb-frontend:
     labels:
       'com.centurylinklabs.watchtower.enable': "true"
