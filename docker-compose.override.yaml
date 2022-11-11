@@ -9,15 +9,15 @@ services:
       - "8443:443"
       - "8081:8080"
 
-  mmb-backend:
+  study-manager-backend:
     labels:
-      'traefik.http.routers.mmb-backend.rule': "Host(`mmb.more.local.redlink.io`) && PathPrefix(`/api`)"
+      'traefik.http.routers.mmb-backend.rule': "Host(`studymanager.more.local.redlink.io`) && (PathPrefix(`/api`) || PathPrefix(`/login`) || PathPrefix(`/logout`))"
     environment:
-      MMB_BASE_URL: 'http://mmb.more.local.redlink.io:8080/api/v1'
+      MMB_BASE_URL: 'http://studymanager.more.local.redlink.io:8080/api/v1'
       DSG_BASE_URL: 'http://dsb.more.local.redlink.io:8080/api/v1'
-  mmb-frontend:
+  study-manager-frontend:
     labels:
-      'traefik.http.routers.mmb-frontend.rule': "Host(`mmb.more.local.redlink.io`)"
+      'traefik.http.routers.mmb-frontend.rule': "Host(`studymanager.more.local.redlink.io`)"
   dsb-gateway:
     labels:
       'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.more.local.redlink.io`)"
