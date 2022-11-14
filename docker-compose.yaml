@@ -53,6 +53,15 @@ services:
         source: postgres-data
         target: /var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+    restart: always
+    healthcheck:
+      test: [ 'CMD-SHELL', '[ "$(redis-cli ping)" = "PONG" ]' ]
+      interval: 10s
+      timeout: 1s
+      retries: 5
+
   # ElasticSearch
   elastic:
     image: docker.elastic.co/elasticsearch/elasticsearch:8.3.2
@@ -123,6 +132,7 @@ services:
       OAUTH2_SERVER: https://auth.more.redlink.io/realms/Auth-Client-Test
       OAUTH2_CLIENT_ID: oauth2-pkce-client
       OAUTH2_CLIENT_SECRET: ''
+      REDIS_HOST: 'redis'
 
   study-manager-frontend:
     image: ghcr.io/more-platform/more-study-manager-frontend:latest
