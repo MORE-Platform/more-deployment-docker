@@ -116,9 +116,11 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     labels:
       'traefik.enable': "true"
-      'traefik.http.routers.mmb-backend.entrypoints': "ssl"
+      'traefik.http.routers.studymanager-backend.entrypoints': "ssl"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost:8080/actuator/health || exit 1"]
       timeout: 2s
@@ -142,7 +144,7 @@ services:
         condition: service_healthy
     labels:
       'traefik.enable': "true"
-      'traefik.http.routers.mmb-frontend.entrypoints': "ssl"
+      'traefik.http.routers.studymanager-frontend.entrypoints': "ssl"
     healthcheck:
       test: ["CMD-SHELL", "wget -q --spider http://localhost/ || exit 1"]
       timeout: 2s
