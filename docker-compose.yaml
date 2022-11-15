@@ -152,6 +152,7 @@ services:
       retries: 3
     environment:
       MORE_API_ENDPOINT: "http://study-manager-backend:8080/api/"
+      MORE_BACKEND_URL: "http://study-manager-backend:8080/"
 
   # Data Storage Gateway
   dsb-gateway:
