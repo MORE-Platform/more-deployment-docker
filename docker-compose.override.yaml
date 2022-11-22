@@ -12,15 +12,12 @@ services:
   study-manager-backend:
     labels:
       'traefik.http.routers.studymanager-backend.rule': "Host(`studymanager.more.local.redlink.io`) && (PathPrefix(`/api`) || PathPrefix(`/login`) || PathPrefix(`/logout`))"
-    environment:
-      MMB_BASE_URL: 'http://studymanager.more.local.redlink.io:8080/api/v1'
-      DSG_BASE_URL: 'http://dsb.more.local.redlink.io:8080/api/v1'
   study-manager-frontend:
     labels:
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.more.local.redlink.io`)"
   data-gateway:
     labels:
-      'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.more.local.redlink.io`)"
+      'traefik.http.routers.dsb-gateway.rule': "Host(`data.more.local.redlink.io`)"
   kibana:
     labels:
       'traefik.http.routers.kibana.rule': "Host(`kibana.more.local.redlink.io`)"
