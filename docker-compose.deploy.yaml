@@ -61,7 +61,7 @@ services:
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.studymanager-frontend.tls.certResolver': 'le'
-  dsb-gateway:
+  data-gateway:
     labels:
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.platform${ENV_SUFFIX--test}.more.redlink.io`)"

@@ -18,7 +18,7 @@ services:
   study-manager-frontend:
     labels:
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.more.local.redlink.io`)"
-  dsb-gateway:
+  data-gateway:
     labels:
       'traefik.http.routers.dsb-gateway.rule': "Host(`dsb.more.local.redlink.io`)"
   kibana:

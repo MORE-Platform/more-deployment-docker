@@ -155,8 +155,8 @@ services:
       MORE_BACKEND_URL: "http://study-manager-backend:8080/"
 
   # Data Storage Gateway
-  dsb-gateway:
-    image: ghcr.io/more-platform/dsb-gateway:latest
+  data-gateway:
+    image: ghcr.io/more-platform/more-data-gateway:latest
     restart: always
     depends_on:
       postgres:
