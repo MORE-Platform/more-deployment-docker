@@ -19,6 +19,19 @@ services:
         source: /root/.docker/config.json
         target: /config.json
         read_only: true
+
+  autohealer:
+    image: willfarrell/autoheal
+    restart: always
+    environment:
+      AUTOHEAL_INTERVAL: 15
+      AUTOHEAL_START_PERIOD: 30
+      AUTOHEAL_DEFAULT_STOP_TIMEOUT: 15
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+
   ingress:
     environment:
       # let's-encrypt config
@@ -43,6 +56,7 @@ services:
 
   study-manager-backend:
     labels:
+      'autoheal': 'true'
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.studymanager-backend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`) && (PathPrefix(`/api`) || PathPrefix(`/oauth2`) || PathPrefix(`/login`))"
       'traefik.http.routers.studymanager-backend.tls.certResolver': 'le'
@@ -56,11 +70,13 @@ services:
 
   study-manager-frontend:
     labels:
+      'autoheal': 'true'
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.studymanager-frontend.tls.certResolver': 'le'
   data-gateway:
     labels:
+      'autoheal': 'true'
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.dsb-gateway.rule': "Host(`data.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.dsb-gateway.tls.certResolver': 'le'
