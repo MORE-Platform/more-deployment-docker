@@ -164,7 +164,7 @@ services:
       elastic:
         condition: service_healthy
     deploy:
-      replicas: 2
+      replicas: 1
     labels:
       'traefik.enable': "true"
       'traefik.http.routers.dsb-gateway.entrypoints': "ssl"
