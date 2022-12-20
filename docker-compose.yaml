@@ -104,7 +104,7 @@ services:
       'traefik.enable': "true"
       'traefik.http.routers.kibana.entrypoints': "ssl"
     healthcheck:
-      test: ["CMD-SHELL", "curl --silent --fail -m 5 -I http://localhost:5601/api/status || exit 1"]
+      test: ["CMD-SHELL", "curl --silent --fail -m 5 -I http://localhost:5601/kibana/api/status || exit 1"]
       interval: 15s
       timeout: 5s
       retries: 3
