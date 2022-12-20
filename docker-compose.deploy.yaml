@@ -88,6 +88,7 @@ services:
     environment:
       SERVER_PUBLICBASEURL: https://kibana.platform${ENV_SUFFIX--test}.more.redlink.io
       XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: a7a6311933d3503b89bc2dbc36572c33a6c10925682e591bffcab6911c06786d
+      SERVER_BASEPATH: /kibana
 
 volumes:
   letsencrypt:
