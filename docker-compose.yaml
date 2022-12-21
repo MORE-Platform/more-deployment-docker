@@ -131,6 +131,7 @@ services:
       POSTGRES_USER: more
       POSTGRES_PASSWORD: secretPassword123
       ELASTIC_HOST: elastic
+      KIBANA_URI: http://kibana:5601
       OAUTH2_SERVER: https://auth.more.redlink.io/realms/Auth-Client-Test
       OAUTH2_CLIENT_ID: oauth2-pkce-client
       OAUTH2_CLIENT_SECRET: ''
