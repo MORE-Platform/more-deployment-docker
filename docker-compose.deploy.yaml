@@ -85,10 +85,13 @@ services:
     labels:
       'traefik.http.routers.kibana.rule': "Host(`kibana.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.kibana.tls.certResolver': 'le'
+    healthcheck:
+      disable: true #Overwriting the healthcheck does not work, so just disable it...
     environment:
-      SERVER_PUBLICBASEURL: https://kibana.platform${ENV_SUFFIX--test}.more.redlink.io
+      SERVER_PUBLICBASEURL: https://kibana.platform${ENV_SUFFIX--test}.more.redlink.io/kibana
       XPACK_ENCRYPTEDSAVEDOBJECTS_ENCRYPTIONKEY: a7a6311933d3503b89bc2dbc36572c33a6c10925682e591bffcab6911c06786d
       SERVER_BASEPATH: /kibana
+      SERVER_REWRITEBASEPATH: "true"
 
 volumes:
   letsencrypt:
