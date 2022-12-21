@@ -58,7 +58,7 @@ services:
     labels:
       'autoheal': 'true'
       'com.centurylinklabs.watchtower.enable': "true"
-      'traefik.http.routers.studymanager-backend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`) && (PathPrefix(`/kibana`) || (PathPrefix(`/api`) || PathPrefix(`/oauth2`) || PathPrefix(`/login`))"
+      'traefik.http.routers.studymanager-backend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`) && (PathPrefix(`/api`) || PathPrefix(`/kibana`) || PathPrefix(`/oauth2`) || PathPrefix(`/login`))"
       'traefik.http.routers.studymanager-backend.tls.certResolver': 'le'
     environment:
       FIREBASE_SETTINGS: 'file:/data/secrets/firebase-settings.json'
