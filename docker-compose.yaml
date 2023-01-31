@@ -179,6 +179,7 @@ services:
       POSTGRES_USER: more
       POSTGRES_PASSWORD: secretPassword123
       ELASTIC_HOST: elastic
+      REDIS_HOST: 'redis'
 
 volumes:
   postgres-data:
