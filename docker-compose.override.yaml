@@ -21,3 +21,6 @@ services:
   kibana:
     labels:
       'traefik.http.routers.kibana.rule': "Host(`kibana.more.local.redlink.io`)"
+  limesurvey:
+    labels:
+      'traefik.http.routers.limesurvey.rule': "Host(`lime.more.local.redlink.io`)"
