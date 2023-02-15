@@ -14,8 +14,7 @@ Follow these steps to set up and configure limesurvey for MORE
    2. Switch to `Email settings` and configure outbound mail (optional)
    3. Switch to `Bounce settings` and configure inbound mail (optional)
    4. Switch to `Language` and update the language-settings (optional)
-   5. Switch to `Interfaces` and enable the required APIs
-      1. **TODO**
+   5. Switch to `Interfaces` and enable the RPC interface JSON-RPC and toggle "Publish API on /admin/remotecontrol".
 4. User Permissions
    1. Go to `Confiugration > User roles`
    2. Klick `Add user role`
@@ -41,4 +40,4 @@ Follow these steps to set up and configure limesurvey for MORE
       11. Add the role `MORE Survey Manager` created earlier to the list of `Global roles for new users`
       12. Save and close
       13. Enable the plugin
-6. Congratulation, you should be done!
+6. Congratulations, you should be done!
