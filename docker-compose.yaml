@@ -109,6 +109,54 @@ services:
       timeout: 5s
       retries: 3
 
+  lime-db:
+    image: postgres:14-alpine
+    restart: always
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}" ]
+      interval: 10s
+      timeout: 1s
+      retries: 5
+    environment:
+      POSTGRES_USER: limesurvey
+      POSTGRES_DB: limesurvey
+      POSTGRES_PASSWORD: secretLime456
+    volumes:
+      - type: volume
+        source: lime-db-data
+        target: /var/lib/postgresql/data
+
+  limesurvey:
+    image: ghcr.io/more-platform/limesurvey:latest
+    restart: always
+    depends_on:
+      lime-db:
+        condition: service_healthy
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.limesurvey.entrypoints': "ssl"
+      'traefik.http.services.limesurvey.loadbalancer.server.port': "8080"
+    healthcheck:
+      test: [ "CMD-SHELL", "curl -sfI -m5 http://localhost:8080 || exit 1"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    environment:
+      DB_TYPE: pgsql
+      DB_PORT: 5432
+      DB_HOST: lime-db
+      DB_PASSWORD: secretLime456
+      DB_NAME: limesurvey
+      DB_USERNAME: limesurvey
+      ADMIN_NAME: MORE Admin
+      ADMIN_USER: more-admin
+      # Initial Password, will be changed on setup
+      ADMIN_PASSWORD: admin
+    volumes:
+      - type: volume
+        source: limesurvey-data
+        target: /var/www/html/upload/surveys
+
   # Management & Monitoring
   study-manager-backend:
     image: ghcr.io/more-platform/more-study-manager-backend:latest
@@ -180,7 +228,10 @@ services:
       POSTGRES_USER: more
       POSTGRES_PASSWORD: secretPassword123
       ELASTIC_HOST: elastic
+      REDIS_HOST: 'redis'
 
 volumes:
   postgres-data:
   elastic-data:
+  lime-db-data:
+  limesurvey-data:
