@@ -2,3 +2,5 @@
 /secrets
 
 gitops-test.log
+
+/docker-compose.local.yaml

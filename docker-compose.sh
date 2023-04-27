@@ -16,6 +16,9 @@ fi
 if [ -f "docker-compose.${DC_ENV}.yaml" ]; then
     COMPOSE_ARGS+=("-f" "docker-compose.${DC_ENV}.yaml")
 fi
+if [ -f "docker-compose.local.yaml" ]; then
+    COMPOSE_ARGS+=("-f" "docker-compose.local.yaml")
+fi
 
 ENV_SUFFIX=
 if [ "$DC_ENV" != "prod" ]; then
