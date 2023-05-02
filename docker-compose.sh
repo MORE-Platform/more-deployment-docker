@@ -2,6 +2,9 @@
 
 DC_ENV=${DC_ENV:-test}
 
+HOME_DIR="$(dirname "$(readlink -f "$0")")"
+cd "$HOME_DIR"
+
 COMPOSE_ARGS=()
 if [ -f "${DC_ENV}.env" ]; then
     COMPOSE_ARGS+=("--env-file" "${DC_ENV}.env")
