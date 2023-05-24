@@ -185,6 +185,9 @@ services:
       OAUTH2_CLIENT_ID: oauth2-pkce-client
       OAUTH2_CLIENT_SECRET: ''
       REDIS_HOST: 'redis'
+      MORE_FE_KC_SERVER: https://auth.more.redlink.io/
+      MORE_FE_KC_REALM: Auth-Client-Test
+      MORE_FE_KC_CLIENT_ID: oauth2-pkce-client
 
   study-manager-frontend:
     image: ghcr.io/more-platform/more-study-manager-frontend:latest

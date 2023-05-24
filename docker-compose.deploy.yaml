@@ -62,6 +62,7 @@ services:
       'traefik.http.routers.studymanager-backend.tls.certResolver': 'le'
     environment:
       FIREBASE_SETTINGS: 'file:/data/secrets/firebase-settings.json'
+      MORE_FE_TITLE: "MORE '${ENV_SUFFIX-test}' Studymanager"
     volumes:
       - type: bind
         source: ./secrets
