@@ -36,8 +36,8 @@ Follow these steps to set up and configure limesurvey for MORE
       6. `Key for email` -> `email`
       7. `Key for name` -> `name`
       8. Tick the `Use as default login` - the classic login form can always be accessed via `${BASE_URL}/admin/authentication/sa/login/authMethod/Authdb`
-      10. Tick the `Create new users` checkbox
-      11. Add the role `MORE Survey Manager` created earlier to the list of `Global roles for new users`
-      12. Save and close
-      13. Enable the plugin
+      9. Tick the `Create new users` checkbox
+      10. Add the role `MORE Survey Manager` created earlier to the list of `Global roles for new users`
+      11. Save and close
+      12. Enable the plugin
 6. Congratulations, you should be done!
