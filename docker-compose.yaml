@@ -45,9 +45,9 @@ services:
       timeout: 1s
       retries: 5
     environment:
-      POSTGRES_PASSWORD: secretPassword123
-      POSTGRES_USER: more
-      POSTGRES_DB: more
+      POSTGRES_PASSWORD: ${MORE_DB_PASSWORD:-secretPassword123}
+      POSTGRES_USER: ${MORE_DB_USER:-more}
+      POSTGRES_DB: ${MORE_DB_NAME:-more}
     volumes:
       - type: volume
         source: postgres-data
@@ -118,9 +118,9 @@ services:
       timeout: 1s
       retries: 5
     environment:
-      POSTGRES_USER: limesurvey
-      POSTGRES_DB: limesurvey
-      POSTGRES_PASSWORD: secretLime456
+      POSTGRES_USER: ${LIME_DB_USER:-limesurvey}
+      POSTGRES_DB: ${LIME_DB_NAME:-limesurvey}
+      POSTGRES_PASSWORD: ${LIME_DB_PASSWORD:-secretLime456}
     volumes:
       - type: volume
         source: lime-db-data
@@ -145,9 +145,9 @@ services:
       DB_TYPE: pgsql
       DB_PORT: 5432
       DB_HOST: lime-db
-      DB_PASSWORD: secretLime456
-      DB_NAME: limesurvey
-      DB_USERNAME: limesurvey
+      DB_PASSWORD: ${LIME_DB_PASSWORD:-secretLime456}
+      DB_NAME: ${LIME_DB_NAME:-limesurvey}
+      DB_USERNAME: ${LIME_DB_USER:-limesurvey}
       ADMIN_NAME: MORE Admin
       ADMIN_USER: more-admin
       # Initial Password, will be changed on setup
@@ -175,10 +175,10 @@ services:
       interval: 15s
       retries: 3
     environment:
-      POSTGRES_DBNAME: more
-      POSTGRES_USER: more
-      POSTGRES_PASSWORD: secretPassword123
-      LIME_ADMIN_PWD: "${LIME_ADMIN_PWD:-hBqRPy9dLRLyvxp25M}"
+      POSTGRES_DBNAME: ${MORE_DB_NAME:-more}
+      POSTGRES_USER: ${MORE_DB_USER:-more}
+      POSTGRES_PASSWORD: ${MORE_DB_PASSWORD:-secretPassword123}
+      LIME_ADMIN_PWD: "${LIME_ADMIN_PWD:-admin}"
       ELASTIC_HOST: elastic
       KIBANA_URI: http://kibana:5601
       OAUTH2_SERVER: https://auth.more.redlink.io/realms/Auth-Client-Test
@@ -227,9 +227,9 @@ services:
       interval: 15s
       retries: 3
     environment:
-      POSTGRES_DBNAME: more
-      POSTGRES_USER: more
-      POSTGRES_PASSWORD: secretPassword123
+      POSTGRES_DBNAME: ${MORE_DB_NAME:-more}
+      POSTGRES_USER: ${MORE_DB_USER:-more}
+      POSTGRES_PASSWORD: ${MORE_DB_PASSWORD:-secretPassword123}
       ELASTIC_HOST: elastic
       REDIS_HOST: 'redis'
 
