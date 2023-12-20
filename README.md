@@ -81,6 +81,7 @@ services:
       LIME_URL: https://lime.example.com/admin/remotecontrol
       LIME_SURVEY_URL: https://lime.example.com/index.php
       LIME_END_SURVEY_URL: https://studymanager.example.com/api/v1/components/observation/lime-survey-observation/end.html
+      LIME_ADMIN_PWD: "${LIME_ADMIN_PWD:-admin}"
 
   study-manager-frontend:
     labels:
@@ -95,6 +96,7 @@ services:
       'traefik.http.routers.limesurvey.rule': "Host(`lime.example.com`)"
 ```
 
+Remember to establish a suitable password for the LimeSurvey admin user (LIME_ADMIN_PWD). This password will be utilized to authenticate RESTful API calls from the backend to the LimeSurvey endpoint.
 ## Setup
 
 Besides deploying the MORE Platform, some components and services require additional setup and configuration:
