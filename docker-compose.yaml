@@ -188,6 +188,7 @@ services:
       MORE_FE_KC_SERVER: https://auth.more.redlink.io/
       MORE_FE_KC_REALM: Auth-Client-Test
       MORE_FE_KC_CLIENT_ID: oauth2-pkce-client
+      TZ: Europe/Vienna
 
   study-manager-frontend:
     image: ghcr.io/more-platform/more-study-manager-frontend:latest
@@ -232,6 +233,7 @@ services:
       POSTGRES_PASSWORD: ${MORE_DB_PASSWORD:-secretPassword123}
       ELASTIC_HOST: elastic
       REDIS_HOST: 'redis'
+      TZ: Europe/Vienna
 
 volumes:
   postgres-data:
