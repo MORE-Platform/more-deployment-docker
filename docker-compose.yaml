@@ -190,6 +190,7 @@ services:
       MORE_FE_KC_CLIENT_ID: oauth2-pkce-client
       LOGIN_TOKEN_ENCRYPTION_KEY: "${LOGIN_TOKEN_ENCRYPTION_KEY:?LOGIN_TOKEN_ENCRYPTION_KEY must be set}"
       LOGIN_TOKEN_SALT_KEY: "${LOGIN_TOKEN_SALT_KEY:?LOGIN_TOKEN_SALT_KEY must be set}"
+      PARTICIPANT_PORTAL_URL: "${PARTICIPANT_PORTAL_URL}"
       TZ: Europe/Vienna
 
   study-manager-frontend:
