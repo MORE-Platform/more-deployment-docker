@@ -24,3 +24,6 @@ services:
   limesurvey:
     labels:
       'traefik.http.routers.limesurvey.rule': "Host(`lime.more.local.redlink.io`)"
+  participant-portal:
+    labels:
+      'traefik.http.routers.participant-portal.rule': "Host(`participant-portal.more.local.redlink.io`)"

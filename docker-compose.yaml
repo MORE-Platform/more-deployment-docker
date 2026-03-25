@@ -237,6 +237,24 @@ services:
       ELASTIC_HOST: elastic
       REDIS_HOST: 'redis'
       TZ: Europe/Vienna
+  participant-portal:
+    image: ghcr.io/more-platform/more-participant-portal:latest
+    restart: always
+    depends_on:
+      data-gateway:
+        condition: service_healthy
+    deploy:
+      replicas: 1
+    labels:
+      'traefik.enable': "true"
+      'traefik.http.routers.participant-portal.entrypoints': "ssl"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -q --spider http://localhost/ || exit 1" ]
+      timeout: 2s
+      interval: 15s
+      retries: 3
+    environment:
+      VITE_PARTICIPANT_PORTAL_BACKEND_URL: "http://data-gateway:8080"
 
 volumes:
   postgres-data:
