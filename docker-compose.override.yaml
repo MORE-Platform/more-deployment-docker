@@ -12,6 +12,8 @@ services:
   study-manager-backend:
     labels:
       'traefik.http.routers.studymanager-backend.rule': "Host(`studymanager.more.local.redlink.io`) && (PathPrefix(`/api`) || PathPrefix(`/login`) || PathPrefix(`/logout`))"
+    environment:
+      PARTICIPANT_PORTAL_URL: "https://participant-portal.more.local.redlink.io:8443"
   study-manager-frontend:
     labels:
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.more.local.redlink.io`)"
