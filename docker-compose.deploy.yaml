@@ -75,12 +75,19 @@ services:
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.studymanager-frontend.rule': "Host(`studymanager.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.studymanager-frontend.tls.certResolver': 'le'
+
   data-gateway:
     labels:
       'autoheal': 'true'
       'com.centurylinklabs.watchtower.enable': "true"
       'traefik.http.routers.dsb-gateway.rule': "Host(`data.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.dsb-gateway.tls.certResolver': 'le'
+
+  participant-portal:
+    labels:
+      'com.centurylinklabs.watchtower.enable': "true"
+      'traefik.http.routers.participant-portal.rule': "Host(`participant-portal.platform${ENV_SUFFIX--test}.more.redlink.io`)"
+      'traefik.http.routers.participant-portal.tls.certResolver': 'le'
 
   kibana:
     labels:
@@ -97,10 +104,6 @@ services:
     labels:
       'traefik.http.routers.limesurvey.rule': "Host(`lime.platform${ENV_SUFFIX--test}.more.redlink.io`)"
       'traefik.http.routers.limesurvey.tls.certResolver': 'le'
-  participant-portal:
-    labels:
-      'traefik.http.routers.participant-portal.rule': "Host(`participant-portal.platform${ENV_SUFFIX--test}.more.redlink.io`)"
-      'traefik.http.routers.participant-portal.tls.certResolver': 'le'
 
 volumes:
   letsencrypt:
