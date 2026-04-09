@@ -107,7 +107,7 @@ Git tags should follow the semantic versioning format: `v<Major>.<Minor>.<Patch>
 
 ### CI/CD Pipeline
 GitHub Actions are configured to build and push images under the following conditions:
-- **Push to branches:** `main`, `develop`, `redlink`, `staging`
+- **Push to branches:** `main`, `develop`
 - **Push tags:** `v*.*.*`
 - **Pull Requests:** Trigger builds to verify changes
 
