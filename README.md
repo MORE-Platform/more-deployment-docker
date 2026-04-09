@@ -97,6 +97,28 @@ services:
 ```
 
 Remember to establish a suitable password for the LimeSurvey admin user (LIME_ADMIN_PWD). This password will be utilized to authenticate RESTful API calls from the backend to the LimeSurvey endpoint.
+
+## Tagging & Deployment Strategy
+
+To ensure safe deployments, we use a tagging strategy for all MORE Platform components.
+
+### Tag Format
+Git tags should follow the semantic versioning format: `v<Major>.<Minor>.<Patch>` (e.g., `v1.0.1`).
+
+### CI/CD Pipeline
+GitHub Actions are configured to build and push images under the following conditions:
+- **Push to branches:** `main`, `develop`, `redlink`, `staging`
+- **Push tags:** `v*.*.*`
+- **Pull Requests:** Trigger builds to verify changes
+
+### Deployment
+By default, the deployment uses the `latest` tag for images, which is automatically updated by `watchtower` when a new version is pushed to the registry on the supported branches. For production environments, it is recommended to pin specific versions in your environment-specific override files:
+
+```yaml
+services:
+  study-manager-backend:
+    image: ghcr.io/more-platform/more-study-manager-backend:v1.0.1
+```
 ## Setup
 
 Besides deploying the MORE Platform, some components and services require additional setup and configuration:
