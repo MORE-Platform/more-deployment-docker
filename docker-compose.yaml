@@ -237,6 +237,10 @@ services:
       ELASTIC_HOST: elastic
       REDIS_HOST: 'redis'
       TZ: Europe/Vienna
+      LIME_BASE_URL: ${LIME_BASE_URL}
+      LIME_ADMIN_USER: ${LIME_ADMIN_USER}
+      LIME_ADMIN_PWD: ${LIME_ADMIN_PWD}
+
   participant-portal:
     image: ghcr.io/more-platform/more-participant-portal:latest
     restart: always
