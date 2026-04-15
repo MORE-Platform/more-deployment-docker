@@ -191,6 +191,7 @@ services:
       LOGIN_TOKEN_ENCRYPTION_KEY: "${LOGIN_TOKEN_ENCRYPTION_KEY:?LOGIN_TOKEN_ENCRYPTION_KEY must be set}"
       LOGIN_TOKEN_SALT_KEY: "${LOGIN_TOKEN_SALT_KEY:?LOGIN_TOKEN_SALT_KEY must be set}"
       PARTICIPANT_PORTAL_URL: "${PARTICIPANT_PORTAL_URL}"
+      LIME_END_SURVEY_URL: "${LIME_END_SURVEY_URL:-http://data-gateway:8080/api/v1/execution/callback}"
       TZ: Europe/Vienna
 
   study-manager-frontend:
