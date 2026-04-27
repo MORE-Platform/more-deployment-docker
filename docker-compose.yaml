@@ -127,7 +127,7 @@ services:
         target: /var/lib/postgresql/data
 
   limesurvey:
-    image: ghcr.io/more-platform/limesurvey:latest
+    image: ghcr.io/more-platform/limesurvey:6.1.0
     restart: always
     depends_on:
       lime-db:
